@@ -1,0 +1,2 @@
+# SpiNNakerWTAsim
+WTA multilayer sim
