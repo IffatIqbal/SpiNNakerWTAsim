@@ -49,21 +49,21 @@ This algorithm implements a Winner-Take-All mechanism in a network of spiking ne
 1. **Lateral Inhibition**:
    - Each neuron inhibits its neighbors to create a competitive environment. The inhibition strength is set using:
      \[
-     \text{weight} = 0.01
+     0.01
      \]
    - Connectivity is probabilistic, with a connection probability of 0.1.
 
 2. **Recurrent Excitation**:
    - Neurons receive excitatory input from themselves and their neighbors to reinforce activation. The excitation strength is set using:
      \[
-     \text{weight} = 0.005
+     0.005
      \]
    - Connections are established with a 0.1 probability.
 
 3. **Stimulus Strength**:
    - Input to neurons is scaled by a strength factor to avoid overwhelming the network. The strength is set as:
      \[
-     \text{weight} = 0.05
+     0.05
      \]
    - This connects the input layer to each hidden layer with a fixed probability of 0.1.
 
