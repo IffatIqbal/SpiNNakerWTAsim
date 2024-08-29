@@ -16,7 +16,7 @@ This script simulates a Winner-Take-All (WTA) network using PyNN with SpiNNaker.
 ### Example Plot:
 ![wta_simulation_full0829-5](https://github.com/user-attachments/assets/6ef1d8b3-bac3-4daa-af76-1ac4efd428c0)
 
-(This image is a placeholder; actual results will vary based on simulation data.)
+(This image is an example; actual results will vary based on simulation data.)
 
 ## Winner-Take-All Network Algorithm
 
