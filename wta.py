@@ -1,7 +1,6 @@
 import pyNN.spiNNaker as p
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 
 # Initialize simulation environment
 p.setup(timestep=1.0)
@@ -55,39 +54,19 @@ for i, layer in enumerate(layers):
     spike_trains = layer.get_data('spikes').segments[0].spiketrains
     spikes_data.append(spike_trains)
 
-# Set up the figure and axis for animation
-fig, ax = plt.subplots(figsize=(10, 8))
-ax.set_xlim(0, simulation_time)
-ax.set_ylim(0, num_layers * neurons_per_layer)
-ax.set_xlabel('Time (ms)')
-ax.set_ylabel('Neuron Index')
-ax.set_title('Winner-Take-All Network Spikes across Layers')
+# Plot all spikes from t=0 to t=final in one image
+plt.figure(figsize=(10, 8))
 
-# Function to update each frame
-def update(frame):
-    ax.clear()
-    ax.set_xlim(0, simulation_time)
-    ax.set_ylim(0, num_layers * neurons_per_layer)
-    ax.set_xlabel('Time (ms)')
-    ax.set_ylabel('Neuron Index')
-    ax.set_title(f'Winner-Take-All Network Spikes (Time {frame}-{frame+50}ms)')
-    
-    for i, spike_trains in enumerate(spikes_data):
-        for train in spike_trains:
-            train_times = np.array(train)
-            spikes_in_frame = train_times[(train_times >= frame) & (train_times < frame + 50)]
-            ax.scatter(spikes_in_frame, np.ones_like(spikes_in_frame) * (i * neurons_per_layer + train.annotations['source_index']), s=2)
+for i, spike_trains in enumerate(spikes_data):
+    for train in spike_trains:
+        train_times = np.array(train)  # Get spike times
+        plt.scatter(train_times, np.ones_like(train_times) * (i * neurons_per_layer + train.annotations['source_index']), s=2)
 
-# Create the animation
-ani = animation.FuncAnimation(fig, update, frames=range(0, simulation_time, 50), interval=200)
-
-# Save the animation as a GIF using PillowWriter
-ani.save('wta_simulation.gif', writer=animation.PillowWriter(fps=5))
-
-
-# Save a static image from the first frame (e.g., t=0 to t=50ms)
-update(0)
-plt.savefig('wta_simulation_static.png')
+plt.xlabel('Time (ms)')
+plt.ylabel('Neuron Index')
+plt.title('Winner-Take-All Network Spikes from t=0 to t=final')
+plt.savefig('wta_simulation_full.png')
+plt.show()
 
 # End the simulation
 p.end()
